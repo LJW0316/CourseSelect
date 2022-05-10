@@ -83,7 +83,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.3.7.RELEASE</version>
                 <configuration>
-                    <mainClass>com.course_selectback_end.CourseSelectBackEndApplication</mainClass>
+                    <mainClass>com.course_select_back_end.CourseSelectBackEndApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
