@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 //验证用户登录信息实体
 public class User {
-    private String name; //用户名
+    private String username; //用户名
     private String password; //密码
+    private String role; //权限类别
+    private String name;
 }

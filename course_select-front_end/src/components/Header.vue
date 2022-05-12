@@ -5,14 +5,14 @@
     <div style="width: 150px;">
       <el-dropdown>
     <span class="el-dropdown-link">
-      <br>{{user.nickName}}
+      <br>{{user.name}}
       <el-icon class="el-icon--right">
         <arrow-down />
       </el-icon>
     </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>用户信息</el-dropdown-item>
+            <el-dropdown-item v-if="user.name === 'student'">用户信息</el-dropdown-item>
             <el-dropdown-item @click="$router.push('/login')">注销</el-dropdown-item>
           </el-dropdown-menu>
         </template>

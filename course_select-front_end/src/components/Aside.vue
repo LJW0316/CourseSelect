@@ -70,7 +70,6 @@ export default {
   created() {
     let userJson = sessionStorage.getItem("user");
     userJson = JSON.parse(userJson);
-    userJson.role = "teacher";
     this.role = userJson.role;
     console.log(this.$route.path);
   }

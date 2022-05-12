@@ -22,6 +22,7 @@
 <script>
 import {UserFilled, Lock} from '@element-plus/icons-vue'
 import request from "../../utils/request";
+import router from "@/router";
 
 export default {
   setup() {
@@ -55,7 +56,13 @@ export default {
                 message: "登录成功"
               })
               sessionStorage.setItem("user", JSON.stringify(res.data))
-              this.$router.push("/") //登录成功之后进行页面跳转，跳转到主页
+              if (res.data.role === "student") {
+                router.push("/select")
+              } else if (res.data.role === "teacher") {
+                router.push("/score")
+              } else {
+                router.push("/student")
+              }
             } else {
               this.$message({
                 type: "error",
