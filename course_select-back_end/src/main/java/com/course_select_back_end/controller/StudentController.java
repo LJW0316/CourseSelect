@@ -17,6 +17,7 @@ public class StudentController {
     @Autowired
     StudentMapper studentMapper;
 
+
     //插入学生
     @PostMapping
     public Result<?> insert(@RequestBody Student student) {

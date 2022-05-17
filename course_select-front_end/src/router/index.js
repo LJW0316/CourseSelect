@@ -32,6 +32,16 @@ const routes = [
         component: ()=> import('@/views/Score')
       },
       {
+        path: 'selectCourse',
+        name: 'selectCourse',
+        component: ()=> import('@/views/SelectCourse')
+      },
+      {
+        path: 'searchCourse',
+        name: 'searchCourse',
+        component: ()=> import('@/views/SearchCourse')
+      },
+      {
         path: 'college',
         name: 'College',
         component: ()=> import('@/views/College')

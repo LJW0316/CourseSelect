@@ -26,7 +26,7 @@ public class CollegeController {
             collegeMapper.insert(college);
             return Result.success();
         } else {
-            return Result.error("-1","学院号已存在！");
+            return Result.error("-1", "学院号已存在！");
         }
     }
 

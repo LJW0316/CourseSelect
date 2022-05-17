@@ -27,8 +27,11 @@
         <template #title>
           <span>学生中心</span>
         </template>
-        <el-menu-item index="select">
-          <template #title>学生选课</template>
+        <el-menu-item index="selectCourse">
+          <template #title >学生选课</template>
+        </el-menu-item>
+        <el-menu-item index="searchCourse">
+          <template #title>课表查询</template>
         </el-menu-item>
         <el-menu-item index="score">
           <template #title>成绩查询</template>
