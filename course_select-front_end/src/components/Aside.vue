@@ -21,6 +21,9 @@
         <el-menu-item index="college">
           <template #title>学院管理</template>
         </el-menu-item>
+        <el-menu-item index="course">
+          <template #title>课程管理</template>
+        </el-menu-item>
       </el-sub-menu>
 
       <el-sub-menu index="2" v-if="role === 'student'">

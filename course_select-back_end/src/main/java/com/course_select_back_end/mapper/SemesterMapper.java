@@ -1,9 +1,9 @@
 package com.course_select_back_end.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.course_select_back_end.entity.OpenCourse;
+import com.course_select_back_end.entity.Semester;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface OpenCourseMapper extends BaseMapper<OpenCourse> {
+public interface SemesterMapper extends BaseMapper<Semester> {
 }

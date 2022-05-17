@@ -7,18 +7,18 @@
       <!--      <el-button type="primary" size="small">导出</el-button>-->
       <!--    搜索区-->
       <div style="float: right;">
-        <el-input v-model="search" placeholder="请输入学院名" style="width: 75%" clearable />
+        <el-input v-model="search" placeholder="请输入课程名" style="width: 75%" clearable />
         <el-button type="primary" style="margin-left: 5px" @click="load">查询</el-button>
       </div>
     </div>
     <!--    内容-->
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column prop="college" label="学院名"/>
-      <el-table-column prop="studentNum" label="学生人数"/>
-      <el-table-column prop="teacherNum" label="教师人数"/>
+      <el-table-column prop="cnum" label="课程号" sortable/>
+      <el-table-column prop="cname" label="课程名"/>
+      <el-table-column prop="academy" label="学院"/>
       <el-table-column fixed="right" label="Operations" width="140">
         <template #default="scope">
-<!--          <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>-->
+          <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
           <el-popconfirm title="确认删除吗?" @confirm="handleDelete(scope.row.id)">
             <template #reference>
               <el-button type="danger" size="small">删除</el-button>
@@ -48,7 +48,13 @@
           width="30%"
       >
         <el-form :model="form" label-width="120px">
-          <el-form-item label="学院名">
+          <el-form-item label="课程号">
+            <el-input v-model="form.cnum" style="width: 80%"/>
+          </el-form-item>
+          <el-form-item label="课程名">
+            <el-input v-model="form.cname" style="width: 80%"/>
+          </el-form-item>
+          <el-form-item label="学院">
             <el-input v-model="form.college" style="width: 80%"/>
           </el-form-item>
         </el-form>
@@ -67,7 +73,7 @@
 import request from "../../utils/request";
 
 export default {
-  name: 'Student',
+  name: 'Teacher',
   components: {},
   data() {
     return {
@@ -85,7 +91,7 @@ export default {
   },
   methods: {
     load() {
-      request.get("/student", {
+      request.get("/teacher", {
         params: {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
@@ -103,7 +109,7 @@ export default {
     },
     save() {
       if (this.form.id) { //更新
-        request.put("/student", this.form).then(res => {
+        request.put("/course", this.form).then(res => {
           console.log(res)
           if (res.code === '0') {
             this.$message({
@@ -120,7 +126,7 @@ export default {
           this.dialogVisible = false; //关闭弹窗
         })
       } else { //新增
-        request.post("/student", this.form).then(res => {
+        request.post("/teacher", this.form).then(res => {
           console.log(res)
           this.$message({
             type: "success",
@@ -138,7 +144,7 @@ export default {
     },
     handleDelete(id){
       console.log(id);
-      request.delete("/student/" + id).then(res => {
+      request.delete("/teacher/" + id).then(res => {
         if (res.code === '0') {
           this.$message({
             type: "success",

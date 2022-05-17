@@ -13,10 +13,10 @@
     </div>
     <!--    内容-->
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column prop="id" label="学号" sortable/>
+      <el-table-column prop="snum" label="学号" sortable/>
       <el-table-column prop="name" label="姓名"/>
-      <el-table-column prop="sex" label="性别"/>
-      <el-table-column prop="birth" label="出生日期"/>
+      <el-table-column prop="grade" label="年级"/>
+      <el-table-column prop="gpa" label="上学期均绩"/>
       <el-table-column prop="college" label="学院"/>
       <el-table-column fixed="right" label="Operations" width="140">
         <template #default="scope">
@@ -50,15 +50,14 @@
           width="30%"
       >
         <el-form :model="form" label-width="120px">
+          <el-form-item label="学号">
+            <el-input v-model="form.snum" style="width: 80%"/>
+          </el-form-item>
           <el-form-item label="姓名">
             <el-input v-model="form.name" style="width: 80%"/>
           </el-form-item>
-          <el-form-item label="性别">
-            <el-radio v-model="form.sex" label="男" size="large"></el-radio>
-            <el-radio v-model="form.sex" label="女" size="large"></el-radio>
-          </el-form-item>
-          <el-form-item label="出身日期">
-            <el-date-picker v-model="form.birth" value-format="YYYY-MM-DD" type="date" style="width: 80%" clearable></el-date-picker>
+          <el-form-item label="年级">
+            <el-input v-model="form.grade" style="width: 80%"/>
           </el-form-item>
           <el-form-item label="学院">
             <el-input v-model="form.college" style="width: 80%"/>
@@ -89,7 +88,8 @@ export default {
       total: 1,
       tableData: [],
       dialogVisible: false,
-      form: {}
+      form: {},
+      addItem: false
     }
   },
   created() {
@@ -111,10 +111,11 @@ export default {
     },
     add() {
       this.dialogVisible = true;
-      this.form = {}
+      this.form = {};
+      this.addItem = true;
     },
     save() {
-      if (this.form.id) { //更新
+      if (!this.addItem) { //更新
         request.put("/student", this.form).then(res => {
           console.log(res)
           if (res.code === '0') {
@@ -140,6 +141,7 @@ export default {
           })
           this.load(); //刷新表格数据
           this.dialogVisible = false; //关闭弹窗
+          this.addItem = false;
         })
       }
 

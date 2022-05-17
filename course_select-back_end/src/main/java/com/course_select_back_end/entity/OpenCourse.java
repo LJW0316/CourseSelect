@@ -1,4 +1,4 @@
-package com.course_select_back_end.controller;
+package com.course_select_back_end.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;

@@ -28,7 +28,7 @@ export default {
   setup() {
     return {
       UserFilled,
-      Lock
+      Lock,
     }
   },
   name: "Login",
