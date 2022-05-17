@@ -25,7 +25,7 @@ public class TeacherController {
             teacherMapper.insert(teacher);
             return Result.success();
         } else {
-            return Result.error("-1", "学号已存在！");
+            return Result.error("-1", "工号已存在！");
         }
     }
 

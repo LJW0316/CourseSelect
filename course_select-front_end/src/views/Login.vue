@@ -57,7 +57,7 @@ export default {
               })
               sessionStorage.setItem("user", JSON.stringify(res.data))
               if (res.data.role === "student") {
-                router.push("/select")
+                router.push("/selectCourse")
               } else if (res.data.role === "teacher") {
                 router.push("/score")
               } else {

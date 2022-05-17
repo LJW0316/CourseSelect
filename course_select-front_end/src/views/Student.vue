@@ -21,7 +21,7 @@
       <el-table-column fixed="right" label="Operations" width="140">
         <template #default="scope">
           <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-popconfirm title="确认删除吗?" @confirm="handleDelete(scope.row.id)">
+          <el-popconfirm title="确认删除吗?" @confirm="handleDelete(scope.row.snum)">
             <template #reference>
               <el-button type="danger" size="small">删除</el-button>
             </template>
@@ -135,10 +135,17 @@ export default {
       } else { //新增
         request.post("/student", this.form).then(res => {
           console.log(res)
-          this.$message({
-            type: "success",
-            message: "新增成功"
-          })
+          if (res.code === '0') {
+            this.$message({
+              type: "success",
+              message: "新增成功"
+            })
+          } else {
+            this.$message({
+              type: "error",
+              message: res.msg
+            })
+          }
           this.load(); //刷新表格数据
           this.dialogVisible = false; //关闭弹窗
           this.addItem = false;
@@ -150,9 +157,9 @@ export default {
       this.form = JSON.parse(JSON.stringify(row));
       this.dialogVisible=true;
     },
-    handleDelete(id){
-      console.log(id);
-      request.delete("/student/" + id).then(res => {
+    handleDelete(snum){
+      console.log(snum);
+      request.delete("/student/" + snum).then(res => {
         if (res.code === '0') {
           this.$message({
             type: "success",

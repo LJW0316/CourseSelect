@@ -53,9 +53,9 @@ public class StudentController {
     }
 
     //删除学生表
-    @DeleteMapping("/{id}")
-    public Result<?> delete(@PathVariable Integer id) {
-        if (studentMapper.deleteById(id) == 1) {
+    @DeleteMapping("/{snum}")
+    public Result<?> delete(@PathVariable String snum) {
+        if (studentMapper.deleteById(snum) == 1) {
             return Result.success();
         } else {
             return Result.error("-1", "删除失败");
