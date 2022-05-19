@@ -22,6 +22,7 @@ public class StudentController {
     public Result<?> insert(@RequestBody Student student) {
         Student res = studentMapper.selectOne(Wrappers.<Student>lambdaQuery().eq(Student::getSnum, student.getSnum()));
         if (res == null) {
+            student.setPassword("123456");
             studentMapper.insert(student);
             return Result.success();
         } else {
