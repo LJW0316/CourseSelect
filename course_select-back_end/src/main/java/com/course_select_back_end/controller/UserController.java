@@ -1,9 +1,6 @@
 package com.course_select_back_end.controller;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.course_select_back_end.common.Result;
-import com.course_select_back_end.entity.Admin;
 import com.course_select_back_end.entity.User;
 import com.course_select_back_end.mapper.AdminMapper;
 import com.course_select_back_end.mapper.StudentMapper;
