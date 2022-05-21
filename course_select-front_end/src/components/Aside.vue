@@ -46,7 +46,10 @@
           <span>教师中心</span>
         </template>
         <el-menu-item index="score">
-          <template #title>成绩管理</template>
+          <template #title>班级管理</template>
+        </el-menu-item>
+        <el-menu-item index="opencourse">
+          <template #title>开设课程</template>
         </el-menu-item>
       </el-sub-menu>
     </el-menu>

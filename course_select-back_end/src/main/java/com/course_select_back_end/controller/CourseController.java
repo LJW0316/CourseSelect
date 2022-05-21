@@ -16,6 +16,10 @@ import com.course_select_back_end.mapper.studentSelectWindowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 
 @RestController
 @CrossOrigin
@@ -80,5 +84,19 @@ public class CourseController {
         } else {
             return Result.error("-1", "选课人数不为0，禁止删除！");
         }
+    }
+
+    //返回学期列表
+    @GetMapping("/semester")
+    public Result<?> semester() {
+        List<Semester> semester = semesterMapper.selectList(null);
+        List<Object> semesterResList = new ArrayList<>();
+        for (Semester value : semester) {
+            HashMap<String, String> item = new HashMap<>();
+            item.put("label", value.getSemester());
+            item.put("value", value.getSemester());
+            semesterResList.add(item);
+        }
+        return Result.success(semesterResList);
     }
 }

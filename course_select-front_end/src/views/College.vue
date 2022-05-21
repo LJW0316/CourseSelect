@@ -21,7 +21,7 @@
 <!--          <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>-->
           <el-popconfirm title="确认删除吗?" @confirm="handleDelete(scope.row.collegeName)">
             <template #reference >
-              <el-button type="danger" size="small" style="margin-left: 32px">删除</el-button>
+              <el-button type="danger" size="small">删除</el-button>
             </template>
           </el-popconfirm>
         </template>

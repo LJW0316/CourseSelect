@@ -1,6 +1,9 @@
 package com.course_select_back_end.controller;
 
 import com.course_select_back_end.common.Result;
+import com.course_select_back_end.entity.Admin;
+import com.course_select_back_end.entity.Student;
+import com.course_select_back_end.entity.Teacher;
 import com.course_select_back_end.entity.User;
 import com.course_select_back_end.mapper.AdminMapper;
 import com.course_select_back_end.mapper.StudentMapper;
@@ -22,13 +25,16 @@ public class UserController {
     @PostMapping("login")
     public Result<?> login(@RequestBody User user) {
         System.out.println(user);
-        if (studentMapper.selectById(user.getUsername()) != null) {
+        Student student = studentMapper.selectById(user.getUsername());
+        Teacher teacher = teacherMapper.selectById(user.getUsername());
+        Admin admin = adminMapper.selectById(user.getUsername());
+        if (student != null && student.getPassword().equals(user.getPassword())) {
             user.setRole("student");
             user.setName(studentMapper.selectById(user.getUsername()).getName());
-        } else if (teacherMapper.selectById(user.getUsername()) != null) {
+        } else if (teacher != null && teacher.getPassword().equals(user.getPassword())) {
             user.setRole("teacher");
             user.setName(teacherMapper.selectById(user.getUsername()).getName());
-        } else if (adminMapper.selectById(user.getUsername()) != null) {
+        } else if (admin != null && admin.getPassword().equals(user.getPassword())) {
             user.setRole("admin");
             user.setName(adminMapper.selectById(user.getUsername()).getName());
         } else {
