@@ -102,7 +102,8 @@ export default {
         tnum:undefined,
         semester:undefined,
         usual_grade:0 ,
-        final_grade:0
+        final_grade:0,
+        gpa:0
       },
       form3:{
         id:undefined,

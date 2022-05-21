@@ -36,9 +36,13 @@
         <el-menu-item index="searchCourse">
           <template #title>课表查询</template>
         </el-menu-item>
-        <el-menu-item index="score">
+        <el-menu-item index="searchGrade">
           <template #title>成绩查询</template>
         </el-menu-item>
+        <el-menu-item index="Graph">
+          <template #title>成绩统计</template>
+        </el-menu-item>
+
       </el-sub-menu>
 
       <el-sub-menu index="3" v-if="role === 'teacher'">

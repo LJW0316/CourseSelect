@@ -32,6 +32,16 @@ const routes = [
         component: ()=> import('@/views/Score')
       },
       {
+        path: 'searchGrade',
+        name: 'searchGrade',
+        component: ()=> import('@/views/SearchGrade')
+      },
+      {
+        path: 'graph',
+        name: 'graph',
+        component: ()=> import('@/views/Graph')
+      },
+      {
         path: 'selectCourse',
         name: 'selectCourse',
         component: ()=> import('@/views/SelectCourse')

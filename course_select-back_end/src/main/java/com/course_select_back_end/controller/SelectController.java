@@ -7,13 +7,12 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.course_select_back_end.common.Result;
 import com.course_select_back_end.entity.*;
-import com.course_select_back_end.mapper.SemesterMapper;
-import com.course_select_back_end.mapper.newOpencourseMapper;
-import com.course_select_back_end.mapper.studentCourseWindowMapper;
-import com.course_select_back_end.mapper.studentSelectWindowMapper;
+import com.course_select_back_end.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -30,6 +29,10 @@ public class SelectController {
     SemesterMapper semesterMapper;
     @Autowired
     studentCourseWindowMapper studentCourseWindowMapper;
+    @Autowired
+    GradeMapper gradeMapper;
+    @Autowired
+    studentGradeWindowMapper studentGradeWindowMapper;
 
 
     @GetMapping("/search_course")
@@ -69,6 +72,9 @@ public class SelectController {
 
     @PostMapping("/select_course")
     public Result<?> save(@RequestBody courseSelect course){
+        course.setFinalGrade(0);
+        course.setUsualGrade(0);
+        course.setGpa(0);
         QueryWrapper<newOpencourse> opencourse=new QueryWrapper<>();
         opencourse.eq("cnum",course.getCnum()).eq("tnum",course.getTnum()).eq("semester",course.getSemester());
         QueryWrapper<courseSelect> selectcourse=new QueryWrapper<>();
@@ -89,12 +95,47 @@ public class SelectController {
         }
     }
 
+    @PostMapping("/select_grade")
+    public Result<?> select_grade(@RequestBody dealWithStudentCourseWindow para){
+        QueryWrapper<studentGradeWindow> grade=new QueryWrapper<>();
+        grade.eq("semester",para.getSemester()).eq("snum",para.getSnum());
+        List<studentGradeWindow> lst=studentGradeWindowMapper.selectList(grade);
+
+        return Result.success(lst);
+    }
+
+    @PostMapping("/select_rank")
+    public Result<?> select_rank(@RequestBody dealWithStudentCourseWindow para){
+        QueryWrapper<Grade> grade=new QueryWrapper<>();
+        grade.eq("semester",para.getSemester()).eq("snum",para.getSnum());
+        QueryWrapper<Grade> rank=new QueryWrapper<>();
+        rank.eq("semester",para.getSemester()).orderByDesc("gpa");
+        ArrayList<Float> lst = new ArrayList<Float>();
+        float Grade=gradeMapper.selectOne(grade).getGpa()/gradeMapper.selectOne(grade).getCredit();
+        float Credit=gradeMapper.selectOne(grade).getCredit();
+        List<Grade> Ranks=gradeMapper.selectList(rank);
+        float Rank=0;
+        for(int i=0;i<Ranks.size();i++){
+            if(Ranks.get(i).getSnum()== para.getSnum()){
+                Rank=i;
+            }
+        }
+        lst.add(Grade);
+        lst.add(Credit);
+        lst.add(Rank+1);
+        return Result.success(lst);
+    }
+
     @PostMapping("/retreat_course")
     public Result<?> delete(@RequestBody courseSelect course){
         QueryWrapper<newOpencourse> opencourse=new QueryWrapper<>();
         opencourse.eq("cnum",course.getCnum()).eq("semester",course.getSemester());
         QueryWrapper<courseSelect> selectcourse=new QueryWrapper<>();
         selectcourse.eq("cnum",course.getCnum()).eq("semester",course.getSemester()).eq("snum",course.getSnum());
+        if(courseSelectMapper.selectOne(selectcourse).getFinalGrade()!=0||courseSelectMapper.selectOne(selectcourse).getUsualGrade()!=0||courseSelectMapper.selectOne(selectcourse).getGpa()!=0){
+            return Result.error("404","老师已经登入成绩！无法退课！");
+        }
+
         if(newOpencourseMapper.selectCount(opencourse)==0){
             return Result.error("404","该课程本学期未开！");
         }
