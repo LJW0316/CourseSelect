@@ -80,10 +80,14 @@
 
 <script>
 import request from "../../utils/request";
+import { ref } from 'vue'
+
+const value = ref('')
 
 export default {
-  name: 'Teacher',
+  name: 'OpenCourse',
   components: {},
+
   data() {
     return {
       search: '',
@@ -93,7 +97,7 @@ export default {
       tableData: [],
       dialogVisible: false,
       form: {},
-      addItem: false
+      addItem: false,
     }
   },
   created() {

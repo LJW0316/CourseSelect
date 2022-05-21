@@ -11,6 +11,18 @@
         <el-button type="primary" style="margin-left: 5px" @click="load">查询</el-button>
       </div>
     </div>
+    <div style="display: flex; width: 100%; margin-top: 50px;">
+      <p style="margin: 6px">当前学期: </p>
+      <el-select v-model="semester" placeholder="选择当前学期" @change="saveSemester">
+        <el-option
+            v-for="item in semesterList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+        />
+      </el-select>
+    </div>
+
     <!--    内容-->
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column prop="cnum" label="课程号" sortable/>
@@ -91,7 +103,9 @@ export default {
       tableData: [],
       dialogVisible: false,
       form: {},
-      addItem: false //新增表示，true表示新增，false表示更新
+      semesterList: [],
+      addItem: false, //新增表示，true表示新增，false表示更新
+      semester: "",
     }
   },
   created() {
@@ -109,6 +123,12 @@ export default {
         console.log(res);
         this.tableData = res.data.records;
         this.total = res.data.total;
+      })
+      request.get("/course/semester").then(res => {
+        console.log(res);
+        for (let x of res.data) {
+          this.semesterList.push(x);
+        }
       })
     },
     add() {
@@ -181,6 +201,13 @@ export default {
     },
     handleCurrentChange() { //改变当前页码触发
       this.load();
+    },
+    saveSemester() {
+      this.$message({
+        type: "success",
+        message: "学期设定成功！"
+      })
+      sessionStorage.setItem("semester", this.semester);
     }
   }
 }

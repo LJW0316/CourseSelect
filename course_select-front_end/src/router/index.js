@@ -29,7 +29,7 @@ const routes = [
       {
         path: 'score',
         name: 'Score',
-        component: ()=> import('@/views/Score')
+        component: ()=> import('@/views/Class')
       },
       {
         path: 'searchGrade',
@@ -60,6 +60,11 @@ const routes = [
         path: 'course',
         name: 'Course',
         component: ()=> import('@/views/Course')
+      },
+      {
+        path: 'opencourse',
+        name: 'OpenCourse',
+        component: () => import('@/views/OpenCourse')
       }
     ]
   },

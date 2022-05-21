@@ -21,11 +21,11 @@
       <el-table-column fixed="right" label="Operations" width="140">
         <template #default="scope">
           <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-popconfirm title="确认删除吗?" @confirm="handleDelete(scope.row.snum)">
-            <template #reference>
-              <el-button type="danger" size="small">删除</el-button>
-            </template>
-          </el-popconfirm>
+<!--          <el-popconfirm title="确认删除吗?" @confirm="handleDelete(scope.row.snum)">-->
+<!--            <template #reference>-->
+<!--              <el-button type="danger" size="small">删除</el-button>-->
+<!--            </template>-->
+<!--          </el-popconfirm>-->
         </template>
       </el-table-column>
     </el-table>
