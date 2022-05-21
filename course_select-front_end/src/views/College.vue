@@ -13,15 +13,15 @@
     </div>
     <!--    内容-->
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column prop="college" label="学院名"/>
-      <el-table-column prop="studentNum" label="学生人数"/>
-      <el-table-column prop="teacherNum" label="教师人数"/>
+      <el-table-column prop="collegeName" label="学院名"/>
+      <el-table-column prop="countStudent" label="学生人数"/>
+      <el-table-column prop="countTeacher" label="教师人数"/>
       <el-table-column fixed="right" label="Operations" width="140">
-        <template #default="scope">
+        <template #default="scope" >
 <!--          <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>-->
-          <el-popconfirm title="确认删除吗?" @confirm="handleDelete(scope.row.id)">
-            <template #reference>
-              <el-button type="danger" size="small">删除</el-button>
+          <el-popconfirm title="确认删除吗?" @confirm="handleDelete(scope.row.collegeName)">
+            <template #reference >
+              <el-button type="danger" size="small" style="margin-left: 32px">删除</el-button>
             </template>
           </el-popconfirm>
         </template>
@@ -49,7 +49,7 @@
       >
         <el-form :model="form" label-width="120px">
           <el-form-item label="学院名">
-            <el-input v-model="form.college" style="width: 80%"/>
+            <el-input v-model="form.collegeName" style="width: 80%"/>
           </el-form-item>
         </el-form>
         <template #footer>
@@ -67,7 +67,7 @@
 import request from "../../utils/request";
 
 export default {
-  name: 'Student',
+  name: 'College',
   components: {},
   data() {
     return {
@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     load() {
-      request.get("/student", {
+      request.get("/college", {
         params: {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
@@ -103,7 +103,7 @@ export default {
     },
     save() {
       if (this.form.id) { //更新
-        request.put("/student", this.form).then(res => {
+        request.put("/college", this.form).then(res => {
           console.log(res)
           if (res.code === '0') {
             this.$message({
@@ -120,12 +120,19 @@ export default {
           this.dialogVisible = false; //关闭弹窗
         })
       } else { //新增
-        request.post("/student", this.form).then(res => {
+        request.post("/college", this.form).then(res => {
           console.log(res)
-          this.$message({
-            type: "success",
-            message: "新增成功"
-          })
+          if (res.code === '0') {
+            this.$message({
+              type: "success",
+              message: "新增成功"
+            })
+          } else {
+            this.$message({
+              type: "error",
+              message: res.msg
+            })
+          }
           this.load(); //刷新表格数据
           this.dialogVisible = false; //关闭弹窗
         })
@@ -136,9 +143,9 @@ export default {
       this.form = JSON.parse(JSON.stringify(row));
       this.dialogVisible=true;
     },
-    handleDelete(id){
-      console.log(id);
-      request.delete("/student/" + id).then(res => {
+    handleDelete(collegeName){
+      console.log(collegeName);
+      request.delete("/college/" + collegeName).then(res => {
         if (res.code === '0') {
           this.$message({
             type: "success",

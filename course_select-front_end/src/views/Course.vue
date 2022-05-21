@@ -14,12 +14,13 @@
     <!--    内容-->
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column prop="cnum" label="课程号" sortable/>
-      <el-table-column prop="cname" label="课程名"/>
-      <el-table-column prop="academy" label="学院"/>
+      <el-table-column prop="cname" label="课程名" sortable/>
+      <el-table-column prop="semester" label="学期" sortable/>
+      <el-table-column prop="credit" label="学分" sortable/>
+      <el-table-column prop="college" label="学院" sortable/>
       <el-table-column fixed="right" label="Operations" width="140">
         <template #default="scope">
-          <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-popconfirm title="确认删除吗?" @confirm="handleDelete(scope.row.id)">
+          <el-popconfirm title="确认删除吗?" @confirm="handleDelete(scope.row)">
             <template #reference>
               <el-button type="danger" size="small">删除</el-button>
             </template>
@@ -54,6 +55,12 @@
           <el-form-item label="课程名">
             <el-input v-model="form.cname" style="width: 80%"/>
           </el-form-item>
+          <el-form-item label="学期">
+            <el-input v-model="form.semester" style="width: 80%"/>
+          </el-form-item>
+          <el-form-item label="学分">
+            <el-input v-model="form.credit" style="width: 80%"/>
+          </el-form-item>
           <el-form-item label="学院">
             <el-input v-model="form.college" style="width: 80%"/>
           </el-form-item>
@@ -73,7 +80,7 @@
 import request from "../../utils/request";
 
 export default {
-  name: 'Teacher',
+  name: 'Course',
   components: {},
   data() {
     return {
@@ -83,7 +90,8 @@ export default {
       total: 1,
       tableData: [],
       dialogVisible: false,
-      form: {}
+      form: {},
+      addItem: false //新增表示，true表示新增，false表示更新
     }
   },
   created() {
@@ -91,7 +99,7 @@ export default {
   },
   methods: {
     load() {
-      request.get("/teacher", {
+      request.get("/course", {
         params: {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
@@ -105,10 +113,11 @@ export default {
     },
     add() {
       this.dialogVisible = true;
-      this.form = {}
+      this.form = {};
+      this.addItem = true
     },
     save() {
-      if (this.form.id) { //更新
+      if (!this.addItem) { //更新
         request.put("/course", this.form).then(res => {
           console.log(res)
           if (res.code === '0') {
@@ -126,14 +135,22 @@ export default {
           this.dialogVisible = false; //关闭弹窗
         })
       } else { //新增
-        request.post("/teacher", this.form).then(res => {
+        request.post("/course", this.form).then(res => {
           console.log(res)
-          this.$message({
-            type: "success",
-            message: "新增成功"
-          })
+          if (res.code === '0') {
+            this.$message({
+              type: "success",
+              message: "新增成功"
+            })
+          } else {
+            this.$message({
+              type: "error",
+              message: res.msg
+            })
+          }
           this.load(); //刷新表格数据
           this.dialogVisible = false; //关闭弹窗
+          this.addItem = false; //新增标识复位
         })
       }
 
@@ -142,9 +159,9 @@ export default {
       this.form = JSON.parse(JSON.stringify(row));
       this.dialogVisible=true;
     },
-    handleDelete(id){
-      console.log(id);
-      request.delete("/teacher/" + id).then(res => {
+    handleDelete(item){
+      console.log(item);
+      request.delete("/course/", {data: item}).then(res => {
         if (res.code === '0') {
           this.$message({
             type: "success",
