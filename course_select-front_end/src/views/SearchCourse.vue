@@ -9,7 +9,7 @@
             @click="dealWithSemester"
         />
       </el-select>
-    <el-button plain @click="open1" style="margin-left: 10px"> 总分 </el-button>
+    <el-button plain @click="open1" style="margin-left: 10px"> 总学分 </el-button>
     <el-divider>
       <el-icon>---</el-icon>
     </el-divider>

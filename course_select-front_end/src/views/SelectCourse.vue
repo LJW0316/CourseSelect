@@ -5,7 +5,7 @@
 
     <div style="margin:10px 0">
       <el-input v-model="search" placeholder="请输入课程名" style="width: 20%"/>
-      <el-button type="primary" style="margin-left: 5px">查询</el-button>
+      <el-button type="primary" style="margin-left: 5px" @click="find">查询</el-button>
     </div>
 
     <el-table :data="tableData" style="width: 100%" height="250">
@@ -24,14 +24,14 @@
 
     <div class="demo-pagination-block">
       <el-pagination
-          v-model:currentPage="currentPage4"
-          v-model:page-size="pageSize4"
-          :page-sizes="pageSize"
+          v-model:currentPage="currentPage"
+          v-model:page-size="pageSize"
+          :page-sizes="[5, 10, 20]"
           :small="small"
           :disabled="disabled"
           :background="background"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
+          v-model:total="total"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
       />
@@ -120,10 +120,12 @@ export default {
       search:'',
       currentPage:1,
       pageSize:10,
-      total:0,
+      total:1,
       tableData:[],
       currentid:JSON.parse(sessionStorage.getItem('user')).username,
-      semester:localStorage.getItem("semester")
+      semester:localStorage.getItem("semester"),
+      coursename:undefined
+
     }
   },
   created() {
@@ -131,10 +133,27 @@ export default {
   },
 
   methods:{
+    find(){
+      console.log(this.search)
+      request.get("student_course/search_course", {
+        params:{
+          pageNum: this.currentPage,
+          pageSize: this.pageSize,
+          cname:this.search,
+          semester:this.semester
+        }
+      }).then(res=>{
+        this.tableData= res.data.records
+      })
+    },
     load(){
       request.get("student_course/search_course", {
-        pageNum: this.currentPage,
-        pageSize: this.pageSize,
+        params:{
+          pageNum: this.currentPage,
+          pageSize: this.pageSize,
+          cname:this.search,
+          semester:this.semester
+        }
       }).then(res=>{
         console.log(this.currentid)
         this.tableData= res.data.records
@@ -169,8 +188,13 @@ export default {
         this.load()
       })
       this.dialogVisible2=false
+    },
+    handleSizeChange() { //改变当前每页个数触发
+      this.load();
+    },
+    handleCurrentChange() { //改变当前页码触发
+      this.load();
     }
-
   }
 }
 
