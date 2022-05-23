@@ -37,7 +37,7 @@ public class SelectController {
 
     @GetMapping("/search_course")
     public Result<?> search_course(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "2022春") String semester){
-        Page<studentSelectWindow> studentSelectWindow=studentSelectWindowMapper.selectPage(new Page<>(pageNum,pageSize), Wrappers.<studentSelectWindow>lambdaQuery().like(com.course_select_back_end.entity.studentSelectWindow::getCname,cname));
+        Page<studentSelectWindow> studentSelectWindow=studentSelectWindowMapper.selectPage(new Page<>(pageNum,pageSize), Wrappers.<studentSelectWindow>lambdaQuery().like(com.course_select_back_end.entity.studentSelectWindow::getCname,cname).eq(com.course_select_back_end.entity.studentSelectWindow::getSemester,semester));
         return Result.success(studentSelectWindow);
     }
 
