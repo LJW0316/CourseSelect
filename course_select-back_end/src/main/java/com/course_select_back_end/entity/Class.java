@@ -21,4 +21,5 @@ public class Class {
     private String place;//开课地点
     private Integer curNum;//当前人数
     private Integer maxNum;//最大人数
+    private String college;//学院
 }

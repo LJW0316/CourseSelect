@@ -13,7 +13,16 @@
     </div>
     <div style="display: flex; width: 100%; margin-top: 50px;">
       <p style="margin: 6px">当前学期: </p>
-      <el-select v-model="semester" placeholder="选择当前学期" @change="saveSemester">
+      <el-select v-model="curSemester" placeholder="选择当前学期" @change="saveCurSemester">
+        <el-option
+            v-for="item in semesterList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+        />
+      </el-select>
+      <p style="margin: 6px">下一学期: </p>
+      <el-select v-model="nextSemester" placeholder="选择下一学期" @change="saveNextSemester">
         <el-option
             v-for="item in semesterList"
             :key="item.value"
@@ -105,7 +114,8 @@ export default {
       form: {},
       semesterList: [],
       addItem: false, //新增表示，true表示新增，false表示更新
-      semester: "",
+      curSemester: "",
+      nextSemester: "",
     }
   },
   created() {
@@ -202,12 +212,19 @@ export default {
     handleCurrentChange() { //改变当前页码触发
       this.load();
     },
-    saveSemester() {
+    saveCurSemester() {
       this.$message({
         type: "success",
         message: "学期设定成功！"
       })
-      sessionStorage.setItem("semester", this.semester);
+      sessionStorage.setItem("curSemester", this.curSemester);
+    },
+    saveNextSemester() {
+      this.$message({
+        type: "success",
+        message: "学期设定成功！"
+      })
+      sessionStorage.setItem("nextSemester", this.nextSemester);
     }
   }
 }
