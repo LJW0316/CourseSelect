@@ -34,10 +34,12 @@ public class UserController {
         } else if (teacher != null && teacher.getPassword().equals(user.getPassword())) {
             user.setRole("teacher");
             user.setName(teacherMapper.selectById(user.getUsername()).getName());
-        } else if (admin != null && admin.getPassword().equals(user.getPassword())) {
+        }
+        else if (admin != null && admin.getPassword().equals(user.getPassword())) {
             user.setRole("admin");
             user.setName(adminMapper.selectById(user.getUsername()).getName());
-        } else {
+        }
+        else {
             return Result.error("-1", "用户名或密码错误");
         }
         return Result.success(user);

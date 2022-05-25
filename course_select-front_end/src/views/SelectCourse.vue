@@ -85,7 +85,7 @@
 </template>
 
 <script >
-localStorage.setItem('semester', '2022春');
+localStorage.setItem('semester', '2022秋');
 
 import request from "../../utils/request";
 

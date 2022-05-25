@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.course_select_back_end.common.Result;
 import com.course_select_back_end.entity.*;
 import com.course_select_back_end.mapper.*;
+import com.course_select_back_end.service.Check;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -79,6 +80,8 @@ public class SelectController {
         opencourse.eq("cnum",course.getCnum()).eq("tnum",course.getTnum()).eq("semester",course.getSemester());
         QueryWrapper<courseSelect> selectcourse=new QueryWrapper<>();
         selectcourse.eq("cnum",course.getCnum()).eq("semester",course.getSemester()).eq("snum",course.getSnum());
+        QueryWrapper<studentCourseWindow> selectcourse2=new QueryWrapper<>();
+        selectcourse2.eq("semester",course.getSemester()).eq("snum",course.getSnum());
         if(newOpencourseMapper.selectCount(opencourse)==0){
             return Result.error("404","该课程本学期未开！");
         }
@@ -89,6 +92,19 @@ public class SelectController {
             return Result.error("404","不能重复选课！");
         }
         else{
+
+            List<studentCourseWindow> selectResult=studentCourseWindowMapper.selectList(selectcourse2);
+
+            if (selectResult != null) {
+                for (studentCourseWindow item : selectResult)
+                    for(studentCourseWindow item2 : selectResult)
+                    {
+                        if(item==item2) continue;
+                        if (!Check.checkTimeConflict(item.getOpenTime(), item2.getOpenTime())) {
+                            return Result.error("-1", "时间冲突，选课失败！");
+                        }
+                    }
+            }
 
             courseSelectMapper.insert(course);
             return Result.success("666","选课成功！");
