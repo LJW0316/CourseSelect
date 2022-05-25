@@ -49,12 +49,16 @@ public class OpenCourseController {
     //教师开课
     @PostMapping
     Result<?> openCourse(@RequestBody OpenCourse openCourse) {
+        System.out.println(openCourse);
         if (teacherOpenCourseMapper.selectOne(Wrappers.<TeacherOpenCourse>lambdaQuery()
-                .eq(TeacherOpenCourse::getCnum, openCourse.getCnum())) == null) {
+                .eq(TeacherOpenCourse::getCnum, openCourse.getCnum()).eq(TeacherOpenCourse::getSemester, openCourse.getSemester())) == null) {
             return Result.error("-1", "请输入正确的课程号");
         }
-        TeacherOpenCourse teacherOpenCourse = teacherOpenCourseMapper.selectById(openCourse.getCnum());
-        if (openCourseMapper.selectOne(Wrappers.<OpenCourse>lambdaQuery().eq(OpenCourse::getCnum, openCourse.getCnum()).eq(OpenCourse::getTnum, openCourse.getTnum())) != null){
+//        TeacherOpenCourse teacherOpenCourse = teacherOpenCourseMapper.selectById(openCourse.getCnum());
+        if (openCourseMapper.selectOne(Wrappers.<OpenCourse>lambdaQuery()
+                .eq(OpenCourse::getCnum, openCourse.getCnum())
+                .eq(OpenCourse::getTnum, openCourse.getTnum())
+                .eq(OpenCourse::getSemester, openCourse.getSemester())) != null){
             return Result.error("-1", "已开设该课程!");
         }
         List<OpenCourse> openCourseList = openCourseMapper.selectList(Wrappers.<OpenCourse>lambdaQuery().eq(OpenCourse::getTnum, openCourse.getTnum())
