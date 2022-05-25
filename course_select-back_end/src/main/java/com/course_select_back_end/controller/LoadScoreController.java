@@ -46,6 +46,7 @@ public class LoadScoreController {
                 .eq(CourseSelect::getTnum, loadScore.getTnum())
                 .eq(CourseSelect::getSnum, loadScore.getSnum());
         CourseSelect courseSelect = courseSelectMapper.selectOne(wrapper);
+        System.out.println(courseSelect);
         courseSelect.setUsualGrade(loadScore.getUsualGrade());
         courseSelect.setFinalGrade(loadScore.getFinalGrade());
         if (courseSelectMapper.updateById(courseSelect) == 1) {
