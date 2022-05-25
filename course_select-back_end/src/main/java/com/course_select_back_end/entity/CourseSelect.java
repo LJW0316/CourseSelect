@@ -7,16 +7,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@TableName("selectcourse")
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("student")
-//学生表
-public class Student {
+//选课表
+public class CourseSelect {
     @TableId
-    private String snum; //学号
-    private String password; //密码
-    private String name; //姓名
-    private Integer grade; //年级
-//    private Double gpa; //绩点
-    private String college; //学院
+    private String cnum;
+    private String semester;
+    private String snum;
+    private String tnum;
+    private float usualGrade;
+    private float finalGrade;
+    private float gpa;
 }
