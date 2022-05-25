@@ -54,7 +54,7 @@ public class OpenCourseController {
             return Result.error("-1", "请输入正确的课程号");
         }
         TeacherOpenCourse teacherOpenCourse = teacherOpenCourseMapper.selectById(openCourse.getCnum());
-        if (openCourseMapper.selectOne(Wrappers.<OpenCourse>lambdaQuery().eq(OpenCourse::getCnum, openCourse.getCnum())) != null){
+        if (openCourseMapper.selectOne(Wrappers.<OpenCourse>lambdaQuery().eq(OpenCourse::getCnum, openCourse.getCnum()).eq(OpenCourse::getTnum, openCourse.getTnum())) != null){
             return Result.error("-1", "已开设该课程!");
         }
         List<OpenCourse> openCourseList = openCourseMapper.selectList(Wrappers.<OpenCourse>lambdaQuery().eq(OpenCourse::getTnum, openCourse.getTnum())
