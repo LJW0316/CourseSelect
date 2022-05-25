@@ -52,7 +52,7 @@
 
       <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button @click="dialogVisible = false">取消</el-button>
         <el-button type="primary" @click="save" v-model="dialogVisible"
         >确定</el-button
         >
@@ -143,6 +143,7 @@ export default {
         }
       }).then(res=>{
         this.tableData= res.data.records
+        this.total=res.data.total;
       })
     },
     load(){
@@ -156,6 +157,7 @@ export default {
       }).then(res=>{
         console.log(this.currentid)
         this.tableData= res.data.records
+        this.total=res.data.total;
       })
     },
     choose(){
