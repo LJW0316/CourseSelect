@@ -70,9 +70,16 @@ public class CourseController {
 
     @DeleteMapping
     public Result<?> delete(@RequestBody CourseShow courseShow) {
-        studentSelectWindow res = studentSelectWindowMapper.selectOne(Wrappers.<studentSelectWindow>lambdaQuery().
+        List<studentSelectWindow> res = studentSelectWindowMapper.selectList(Wrappers.<studentSelectWindow>lambdaQuery().
                 eq(studentSelectWindow::getCnum, courseShow.getCnum()).eq(studentSelectWindow::getSemester, courseShow.getSemester()));
-        if (res == null) {
+        boolean flag = true;
+        for (studentSelectWindow selectWindow : res) {
+            if (selectWindow.getCurNum() > 0) {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
             if (semesterMapper.delete(Wrappers.<Semester>lambdaQuery()
                     .eq(Semester::getCnum, courseShow.getCnum()).eq(Semester::getSemester, courseShow.getSemester())) == 1) {
                 return Result.success();
