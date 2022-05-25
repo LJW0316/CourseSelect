@@ -62,6 +62,7 @@
 
 <script>
 import request from "../../utils/request";
+import router from "@/router";
 
 export default {
   name: 'Score',
@@ -156,7 +157,9 @@ export default {
     },
     handleEdit(row) {
       this.form = JSON.parse(JSON.stringify(row));
-
+      router.push("/loadscore");
+      sessionStorage.setItem("cnum", row.cnum);
+      sessionStorage.setItem("tnum", this.tnum);
     },
     handleDelete(tnum) {
       console.log(tnum);

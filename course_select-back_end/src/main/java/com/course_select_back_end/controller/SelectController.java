@@ -1,7 +1,5 @@
 package com.course_select_back_end.controller;
 
-import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -12,7 +10,6 @@ import com.course_select_back_end.service.Check;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.Query;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +22,7 @@ public class SelectController {
     @Autowired
     newOpencourseMapper newOpencourseMapper;
     @Autowired
-    com.course_select_back_end.mapper.courseSelectMapper courseSelectMapper;
+    CourseSelectMapper courseSelectMapper;
     @Autowired
     SemesterMapper semesterMapper;
     @Autowired
@@ -72,13 +69,13 @@ public class SelectController {
     }
 
     @PostMapping("/select_course")
-    public Result<?> save(@RequestBody courseSelect course){
+    public Result<?> save(@RequestBody CourseSelect course){
         course.setFinalGrade(0);
         course.setUsualGrade(0);
         course.setGpa(0);
         QueryWrapper<newOpencourse> opencourse=new QueryWrapper<>();
         opencourse.eq("cnum",course.getCnum()).eq("tnum",course.getTnum()).eq("semester",course.getSemester());
-        QueryWrapper<courseSelect> selectcourse=new QueryWrapper<>();
+        QueryWrapper<CourseSelect> selectcourse=new QueryWrapper<>();
         selectcourse.eq("cnum",course.getCnum()).eq("semester",course.getSemester()).eq("snum",course.getSnum());
         QueryWrapper<studentCourseWindow> selectcourse2=new QueryWrapper<>();
         selectcourse2.eq("semester",course.getSemester()).eq("snum",course.getSnum());
@@ -143,10 +140,10 @@ public class SelectController {
     }
 
     @PostMapping("/retreat_course")
-    public Result<?> delete(@RequestBody courseSelect course){
+    public Result<?> delete(@RequestBody CourseSelect course){
         QueryWrapper<newOpencourse> opencourse=new QueryWrapper<>();
         opencourse.eq("cnum",course.getCnum()).eq("semester",course.getSemester());
-        QueryWrapper<courseSelect> selectcourse=new QueryWrapper<>();
+        QueryWrapper<CourseSelect> selectcourse=new QueryWrapper<>();
         selectcourse.eq("cnum",course.getCnum()).eq("semester",course.getSemester()).eq("snum",course.getSnum());
         if(courseSelectMapper.selectOne(selectcourse).getFinalGrade()!=0||courseSelectMapper.selectOne(selectcourse).getUsualGrade()!=0||courseSelectMapper.selectOne(selectcourse).getGpa()!=0){
             return Result.error("404","老师已经登入成绩！无法退课！");

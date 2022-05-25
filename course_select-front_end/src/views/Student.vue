@@ -16,7 +16,7 @@
       <el-table-column prop="snum" label="学号" sortable/>
       <el-table-column prop="name" label="姓名"/>
       <el-table-column prop="grade" label="年级"/>
-      <el-table-column prop="gpa" label="上学期均绩"/>
+<!--      <el-table-column prop="gpa" label="上学期均绩"/>-->
       <el-table-column prop="college" label="学院"/>
       <el-table-column fixed="right" label="Operations" width="140">
         <template #default="scope">
