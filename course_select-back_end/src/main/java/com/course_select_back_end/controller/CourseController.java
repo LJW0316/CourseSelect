@@ -16,9 +16,7 @@ import com.course_select_back_end.mapper.studentSelectWindowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 
 @RestController
@@ -91,10 +89,14 @@ public class CourseController {
     public Result<?> semester() {
         List<Semester> semester = semesterMapper.selectList(null);
         List<Object> semesterResList = new ArrayList<>();
+        Set<String> semesterSet = new HashSet<>();
         for (Semester value : semester) {
+            semesterSet.add(value.getSemester());
+        }
+        for (String value : semesterSet) {
             HashMap<String, String> item = new HashMap<>();
-            item.put("label", value.getSemester());
-            item.put("value", value.getSemester());
+            item.put("label", value);
+            item.put("value", value);
             semesterResList.add(item);
         }
         return Result.success(semesterResList);
