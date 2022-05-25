@@ -85,7 +85,6 @@
 </template>
 
 <script >
-localStorage.setItem('semester', '2022秋');
 
 import request from "../../utils/request";
 
@@ -123,7 +122,7 @@ export default {
       total:1,
       tableData:[],
       currentid:JSON.parse(sessionStorage.getItem('user')).username,
-      semester:localStorage.getItem("semester"),
+      semester:sessionStorage.getItem("nextSemester"),
       coursename:undefined
 
     }

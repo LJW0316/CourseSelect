@@ -136,6 +136,7 @@ export default {
       })
       request.get("/course/semester").then(res => {
         console.log(res);
+        this.semesterList = [];
         for (let x of res.data) {
           this.semesterList.push(x);
         }
