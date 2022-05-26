@@ -51,7 +51,7 @@
       >
         <el-form :model="form" label-width="120px">
           <el-form-item label="学号">
-            <el-input v-model="form.snum" style="width: 80%"/>
+            <el-input v-model="form.snum" style="width: 80%" disabled/>
           </el-form-item>
           <el-form-item label="姓名">
             <el-input v-model="form.name" style="width: 80%"/>
