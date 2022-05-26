@@ -143,15 +143,12 @@ public class SelectController {
         opencourse.eq("cnum",course.getCnum()).eq("semester",course.getSemester());
         QueryWrapper<CourseSelect> selectcourse=new QueryWrapper<>();
         selectcourse.eq("cnum",course.getCnum()).eq("semester",course.getSemester()).eq("snum",course.getSnum());
-        if(courseSelectMapper.selectOne(selectcourse).getFinalGrade()!=0||courseSelectMapper.selectOne(selectcourse).getUsualGrade()!=0||courseSelectMapper.selectOne(selectcourse).getGpa()!=0){
-            return Result.error("404","老师已经登入成绩！无法退课！");
-        }
 
-        if(newOpencourseMapper.selectCount(opencourse)==0){
-            return Result.error("404","该课程本学期未开！");
+        if(!newOpencourseMapper.exists(opencourse)){
+            return Result.error("404","您没有选过该课程!");
         }
-        else if(courseSelectMapper.selectCount(selectcourse)==0){
-            return Result.error("404","您没有选该课程");
+        else if(courseSelectMapper.selectOne(selectcourse).getFinalGrade()!=0||courseSelectMapper.selectOne(selectcourse).getUsualGrade()!=0||courseSelectMapper.selectOne(selectcourse).getGpa()!=0){
+            return Result.error("404","老师已经登入成绩！无法退课！");
         }
         else{
             courseSelectMapper.delete(selectcourse);
