@@ -35,6 +35,7 @@ public class UserController {
             user.setRole("teacher");
             user.setName(teacherMapper.selectById(user.getUsername()).getName());
         }
+
         else if (admin != null && admin.getPassword().equals(user.getPassword())) {
             user.setRole("admin");
             user.setName(adminMapper.selectById(user.getUsername()).getName());
