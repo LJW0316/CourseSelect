@@ -1,5 +1,5 @@
 <template>
-  <div style="padding:10px ">
+  <div class="home" style="padding: 10px;">
     <el-button type="primary" style="margin-left: 5px;background-color: #3b3d3f" @click="choose">选课</el-button>
     <el-button type="primary" style="margin-left: 5px;background-color: red" @click="choose2">退课</el-button>
 
@@ -8,7 +8,7 @@
       <el-button type="primary" style="margin-left: 5px" @click="find">查询</el-button>
     </div>
 
-    <el-table :data="tableData" style="width: 100%" height="250">
+    <el-table :data="tableData" style="width: 100%" border>
       <el-table-column property="cnum" label="课程号"  sortable />
       <el-table-column property="cname" label="课程名" sortable />
       <el-table-column property="credit" label="学分" sortable />
@@ -22,7 +22,7 @@
 
     <divider/>
 
-    <div class="demo-pagination-block">
+    <div class="demo-pagination-block" style="margin: 10px 0">
       <el-pagination
           v-model:currentPage="currentPage"
           v-model:page-size="pageSize"
@@ -36,6 +36,8 @@
           @current-change="handleCurrentChange"
       />
     </div>
+
+
     <el-dialog
         v-model="dialogVisible"
         title="选课"
@@ -117,9 +119,10 @@ export default {
       dialogVisible:false,
       dialogVisible2:false,
       search:'',
-      currentPage:1,
-      pageSize:10,
-      total:1,
+      currentPage: 1,
+      pageSize: 10,
+      total: 100,
+
       tableData:[],
       currentid:JSON.parse(sessionStorage.getItem('user')).username,
       semester:sessionStorage.getItem("nextSemester"),

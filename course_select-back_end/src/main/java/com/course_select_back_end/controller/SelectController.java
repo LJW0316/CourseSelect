@@ -93,11 +93,9 @@ public class SelectController {
             List<studentCourseWindow> selectResult=studentCourseWindowMapper.selectList(selectcourse2);
 
             if (selectResult != null) {
-                for (studentCourseWindow item : selectResult)
-                    for(studentCourseWindow item2 : selectResult)
+                    for(studentCourseWindow item : selectResult)
                     {
-                        if(item==item2) continue;
-                        if (!Check.checkTimeConflict(item.getOpenTime(), item2.getOpenTime())) {
+                        if (!Check.checkTimeConflict(item.getOpenTime(), newOpencourseMapper.selectOne(opencourse).getOpenTime())) {
                             return Result.error("-1", "时间冲突，选课失败！");
                         }
                     }
