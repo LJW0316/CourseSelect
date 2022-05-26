@@ -146,7 +146,7 @@ export default {
         }
       }).then(res=>{
         this.tableData= res.data.records
-        this.total=res.data.total
+        this.total=res.data.total;
       })
     },
     load(){
@@ -160,7 +160,7 @@ export default {
       }).then(res=>{
         console.log(this.currentid)
         this.tableData= res.data.records
-        this.total=res.data.total
+        this.total=res.data.total;
       })
     },
     choose(){
