@@ -8,7 +8,7 @@
       <!--    搜索区-->
       <div style="float: right;">
         <el-input v-model="search" placeholder="请输入课程名" style="width: 75%" clearable/>
-        <el-button type="primary" style="margin-left: 5px" @click="load">查询</el-button>
+        <el-button type="primary" style="margin-left: 1.1%" @click="load">查询</el-button>
       </div>
     </div>
     <div style="display: flex; width: 100%; margin-top: 50px;">
