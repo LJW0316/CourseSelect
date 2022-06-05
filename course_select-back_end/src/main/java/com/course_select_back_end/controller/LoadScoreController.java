@@ -51,7 +51,7 @@ public class LoadScoreController {
         courseSelect.setFinalGrade(loadScore.getFinalGrade());
         if (courseSelectMapper.updateById(courseSelect) == 1) {
             courseSelectMapper.setGrade(courseSelect.getCnum(), courseSelect.getSemester(), courseSelect.getSnum(),
-                    courseSelect.getTnum(), courseSelect.getUsualGrade(), courseSelect.getFinalGrade());
+                    courseSelect.getTnum(), courseSelect.getUsualGrade(), courseSelect.getFinalGrade()); //存储过程调用
             return Result.success();
         } else {
             return Result.error("-1", "更新失败");
